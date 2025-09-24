@@ -1,8 +1,12 @@
 import requests
 import json
+from payload import (
+    acc_1_deletion_token,
+    acc_2_deletion_token
+)
 
 
-def cancel_class(class_id: int) -> int:
+def cancel_class(acc: str, class_id: int) -> int:
     url = f"https://atlas-api-gateway.heart.org/classManagement/v1/classes/{class_id}"
     payload = json.dumps({
         "class": {
@@ -25,11 +29,7 @@ def cancel_class(class_id: int) -> int:
         'sec-fetch-mode': 'cors',
         'sec-fetch-site': 'same-site',
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
-        'x-jwt-token': 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIyIiwic3ViIjoiQW1lcmljYW4gaGVhcnQgYXNzb2NpYXRpb24iLCJ1c2VyX2lkIjoiNyIsImZuIjoiQXRsYXMiLCJlbWFpbCI6ImF0bGFzX2FkbWluQG1haWwuY29tIiwibG4iOiJBZG1pbiIsInVzZXJfcm9sZXMiOiJbMiwgMTFdIiwidHlwZSI6ImxlYXJuZXIiLCJhZG1pbiI6ZmFsc2UsInNzb0lkIjoiZGFjYmY2NzgtZjBjZC00ZjQzLWFhZjAtN2NkNTA1OGZiOWY5Iiwicm9sZV9uYW1lcyI6IltwdWJsaWMsIGF0bGFzX2FkbWluXSIsImFwcElkIjoiQUhBLUF0bGFzIiwiY3QiOjIzODkxMjkzMjE4MTM2MzksImlhdCI6MTc1ODc0NTM3NSwiZXhwIjoxNzU4ODMxNzc1fQ.eCUO1dGl2Zo6ZtYeOmN9Ju5SB4LMqoIqd9-2NdrLhZk'
+        'x-jwt-token': acc_1_deletion_token if acc == 'acc_1' else acc_2_deletion_token
     }
     response = requests.patch(url, headers=headers, data=payload)
     return response.status_code
-
-# Example usage:
-# status = cancel_class(10531026)
-# print(status)
