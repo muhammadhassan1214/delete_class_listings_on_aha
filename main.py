@@ -51,7 +51,7 @@ def main():
                 print(f"Malformed item data: {e}")
                 continue
 
-            if status == "CANCELLED":
+            if status == "CANCELLED" or status == "COMPLETED":
                 # print(f"Class ID {class_id} is already cancelled.")
                 continue
             if class_id:
