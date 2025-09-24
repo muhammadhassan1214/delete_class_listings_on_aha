@@ -39,7 +39,8 @@ def cancel_class_threadsafe(class_id, status, lock):
 
 def main():
     try:
-        user_pages = int(input("Enter the number of pages to fetch (each page contains up to 100 classes): "))
+        print("https://atlas.heart.org/organisation/class-listing")
+        user_pages = int(input("Enter the total number of items displying on above page: "))
         if user_pages <= 0:
             print("Number of pages must be positive.")
             return
