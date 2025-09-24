@@ -16,7 +16,7 @@ def main():
         print("Invalid input. Please enter a valid integer.")
         return
 
-    total_page = round_up_to_next_hundred(user_pages)
+    total_page = int(round_up_to_next_hundred(user_pages) / 100)
     print(f"Fetching {total_page} pages...")
 
     for i in range(total_page):
