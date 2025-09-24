@@ -63,6 +63,7 @@ def main():
                         print(f"Failed to cancel class ID {class_id}. Response code: {response_code}")
                 except Exception as e:
                     print(f"Error cancelling class ID {class_id}: {e}")
+    print("Process completed.")
 
 
 if __name__ == "__main__":
