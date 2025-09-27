@@ -1,18 +1,16 @@
 import requests
 import json
-from payload import *
+from payload import accounts
 
 def fetch_details(acc: str):
-    if acc == 'acc_1':
-        return acc_1_parent_id, acc_1_time_zone, acc_1_ext_id, acc_1_token
-    elif acc == 'acc_2':
-        return acc_2_parent_id, acc_2_time_zone, acc_2_ext_id, acc_2_token
-    else:
+    if acc not in accounts:
         raise ValueError("Invalid account identifier. Use 'acc_1' or 'acc_2'.")
+    acc_data = accounts[acc]
+    return acc_data['parent_id'], acc_data['time_zone'], acc_data['ext_id']
 
 
-def get_classes(acc: str, page_number: int):
-    parent_id, time_zone, ext_id, token = fetch_details(acc)
+def get_classes(acc: str, page_number: int, token: str):
+    parent_id, time_zone, ext_id = fetch_details(acc)
     url = f"https://atlas-api-gateway.heart.org/classManagement/v2/getClasses?size=100&page={page_number}&sort=startDateTime,desc"
     payload = json.dumps({
         "classFilters": {
@@ -51,6 +49,13 @@ def get_classes(acc: str, page_number: int):
         'x-jwt-token': token
     }
     response = requests.post(url, headers=headers, data=payload)
-    json_response = response.json()
+    try:
+        json_response = response.json()
+    except Exception as e:
+        print(f"Error parsing JSON response for page {page_number}: {e}\nRaw response: {response.text}")
+        return []
+    if not isinstance(json_response, dict) or 'data' not in json_response or 'items' not in json_response['data']:
+        print(f"Unexpected response structure for page {page_number}: {json_response}")
+        return []
     items = json_response['data']['items']
     return items
