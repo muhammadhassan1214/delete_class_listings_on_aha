@@ -9,7 +9,7 @@ def fetch_details(acc: str):
     return acc_data['parent_id'], acc_data['time_zone'], acc_data['ext_id']
 
 
-def get_classes(acc: str, page_number: int, token: str):
+def get_classes(acc: str, page_number: int, token: str, status_to_cancel=None):
     parent_id, time_zone, ext_id = fetch_details(acc)
     url = f"https://atlas-api-gateway.heart.org/classManagement/v2/getClasses?size=100&page={page_number}&sort=startDateTime,desc"
     payload = json.dumps({
@@ -20,7 +20,7 @@ def get_classes(acc: str, page_number: int, token: str):
             "seatAvailability": None,
             "langCode": None,
             "location": None,
-            "classStatus": None,
+            "classStatus": status_to_cancel,
             "isPrivate": None,
             "pageNumber": 0,
             "selectedSort": "startDateTime",

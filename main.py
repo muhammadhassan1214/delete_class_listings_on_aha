@@ -9,6 +9,21 @@ from utils.get_classes import get_classes
 from utils.cancle_class import cancel_class
 
 
+def get_status_from_user():
+    """Prompt user to select status."""
+    while True:
+        print('Select which one to cancel: ')
+        status = input("\nEnter 1 for UPCOMING\nEnter 2 for ACTIVE\nEnter 3 for BOTH\n\nYour Answer: ").strip()
+        if status == '1':
+            return 'CANCELLED'
+        elif status == '2':
+            return 'COMPLETED'
+        elif status == '3':
+            return None
+        else:
+            print("Invalid selection. Please enter 1 or 2.")
+
+
 def account_selection() -> str:
     """Prompt user to select an account."""
     while True:
@@ -32,11 +47,6 @@ def cancelation_method() -> str:
             return 'simple'
         else:
             print("Invalid selection. Please enter 1 or 2.")
-
-
-def round_up_to_next_hundred(n: int) -> int:
-    """Round up integer to next hundred."""
-    return ((n // 100) + 1) * 100 if n % 100 != 0 else n
 
 
 def get_token() -> str:
@@ -93,10 +103,11 @@ def process_csv_cancellations(acc: str, token: str):
 def process_simple_cancellations(acc: str, token: str):
     """Cancel classes by fetching items from pages."""
     try:
+        status_to_cancel = get_status_from_user()
         i = 0
         while True:
             try:
-                items, is_last_page = get_classes(acc, i, token)
+                items, is_last_page = get_classes(acc, i, token, status_to_cancel)
                 print(items, is_last_page)
                 if not items:
                     print(f"No items found on page {i + 1}.")
