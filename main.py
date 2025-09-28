@@ -12,8 +12,9 @@ from utils.cancle_class import cancel_class
 def get_status_from_user():
     """Prompt user to select status."""
     while True:
-        print('Select which one to cancel: ')
-        status = input("\nEnter 1 for UPCOMING\nEnter 2 for ACTIVE\nEnter 3 for BOTH\n\nYour Answer: ").strip()
+        print('\nSelect a class status to cancel')
+        print("Enter 1 for UPCOMING\nEnter 2 for ACTIVE\nEnter 3 for BOTH")
+        status = input("Your Answer: ").strip()
         if status == '1':
             return 'CANCELLED'
         elif status == '2':
