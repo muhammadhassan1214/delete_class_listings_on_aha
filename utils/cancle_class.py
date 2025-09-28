@@ -1,6 +1,6 @@
 import requests
 import json
-from payload import accounts
+from utils.payload import accounts
 
 
 def cancel_class(acc: str, class_id: int, token: str) -> int:

@@ -1,6 +1,6 @@
 import requests
 import json
-from payload import accounts
+from utils.payload import accounts
 
 def fetch_details(acc: str):
     if acc not in accounts:
@@ -58,4 +58,5 @@ def get_classes(acc: str, page_number: int, token: str):
         print(f"Unexpected response structure for page {page_number}: {json_response}")
         return []
     items = json_response['data']['items']
-    return items
+    is_last_page = json_response['data']['pagination']['isLast']
+    return items, is_last_page
